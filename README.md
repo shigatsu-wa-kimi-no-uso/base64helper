@@ -2,7 +2,7 @@
 
 #### 介绍
 base64编码解码器
-
+https://zhuanlan.zhihu.com/p/585153904
 #### 文件说明
 
 1.  Base64Helper.h base64解码编码器所用的类Base64Helper的声明
