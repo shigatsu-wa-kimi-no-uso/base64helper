@@ -1,17 +1,18 @@
-#pragma once
+
 /* Base64Helper.h 
-// Accomplished on 2022/11/20 
+// Completed on 2022/11/20 
 // by kiminouso,Hohai University
 */
 
 #ifndef _BASE64HELPER_H_
 #define _BASE64HELPER_H_
+#pragma once
 typedef unsigned char BYTE;
 typedef unsigned long DWORD;
 
 class Base64Helper
 {
-    const char index2char[66] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="; //末尾特殊符号'='表示最后的空缺
+    const char index2char[66] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="; //鏈熬鐗规畩绗﹀彿'='琛ㄧず鏈�鍚庣殑绌虹己
 
     const BYTE char2index[256] = {
          /*0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 */
