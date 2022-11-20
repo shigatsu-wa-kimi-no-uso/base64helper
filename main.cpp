@@ -1,4 +1,8 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+/* main.cpp (applying Base64Helper)
+// Completed on 2022/11/20
+// by kiminouso,Hohai University
+*/
+#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<string.h>
 #include"Base64Helper.h"
