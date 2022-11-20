@@ -1,5 +1,5 @@
 /* Base64Helper.cpp
-// Accomplished on 2022/11/20
+// Completed on 2022/11/20
 // by kiminouso,Hohai University
 */
 #include "Base64Helper.h"
@@ -13,33 +13,33 @@ BYTE* Base64Helper::decode(BYTE* base64code, int len, int* outlen)
 
 	BYTE* const code = new BYTE[len];
 
-	/*¼ì²âºÏ·¨ĞÔ,¹ıÂË»»ĞĞ·û²¢×ª»»ÎªË÷ÒıÂë,*/
+	/*æ£€æµ‹åˆæ³•æ€§,è¿‡æ»¤æ¢è¡Œç¬¦å¹¶è½¬æ¢ä¸ºç´¢å¼•ç ,*/
 	int j = 0;
 	for (int i = 0; i < len - 2; i++)
 	{
 		if (char2index[base64code[i]] > 64) return 0;
-		if (char2index[base64code[i]] == 64) continue; //»»ĞĞ·ûÔÚchar2indexÖĞ¶ÔÓ¦Îª64
+		if (char2index[base64code[i]] == 64) continue; //æ¢è¡Œç¬¦åœ¨char2indexä¸­å¯¹åº”ä¸º64
 		code[j] = char2index[base64code[i]];
 		j++;
 	}
 
-	/*¶ÔÓÚ×îºó2¸ö×Ö·û,'='Ò²ÊÇºÏºÏ·¨µÄ*/
+	/*å¯¹äºæœ€å2ä¸ªå­—ç¬¦,'='ä¹Ÿæ˜¯åˆåˆæ³•çš„*/
 	for (int i = len - 2; i < len; i++)
 	{
-		if (char2index[base64code[i]] > 65) return 0; //65Îª'='ÔÚchar2indexÖĞ¶ÔÓ¦µÄÖµ
+		if (char2index[base64code[i]] > 65) return 0; //65ä¸º'='åœ¨char2indexä¸­å¯¹åº”çš„å€¼
 		if (char2index[base64code[i]] == 64) continue;
 		code[j] = char2index[base64code[i]];
 		j++;
 	}
 
-	if (j % 4 != 0) return 0;			//base64Âë³¤¶ÈÒ»¶¨ÊÇ4µÄ±¶Êı(È¥µô»»ĞĞºó)
+	if (j % 4 != 0) return 0;			//base64ç é•¿åº¦ä¸€å®šæ˜¯4çš„å€æ•°(å»æ‰æ¢è¡Œå)
 
-	int blockCnt = j / 4;	//base64Êı¾İ¿éÊı
+	int blockCnt = j / 4;	//base64æ•°æ®å—æ•°
 
-	/*ÏÈ´¦Àí×îºó4¸ö×Ö·û*/
-	/*Çé¿ö1: ×îºó4¸ö×Ö·ûÓĞ2¸ö'='(code==65),ËµÃ÷Ô­Ê¼Êı¾İÔÚ×îºóÈ±2×Ö½Ú²ÅÄÜ´Õ×ã3×Ö½Ú*/
-	/*Çé¿ö2: ×îºó4¸ö×Ö·ûÓĞ1¸ö'=',ËµÃ÷Ô­Ê¼Êı¾İÔÚ×îºóÈ±1×Ö½Ú²ÅÄÜ´Õ×ã3×Ö½Ú*/
-	/*Çé¿ö3: ×îºó4¸ö×Ö·ûÖĞÃ»ÓĞ'=',ËµÃ÷Ô­Ê¼Êı¾İ³¤¶ÈÊÇ3µÄ±¶Êı*/
+	/*å…ˆå¤„ç†æœ€å4ä¸ªå­—ç¬¦*/
+	/*æƒ…å†µ1: æœ€å4ä¸ªå­—ç¬¦æœ‰2ä¸ª'='(code==65),è¯´æ˜åŸå§‹æ•°æ®åœ¨æœ€åç¼º2å­—èŠ‚æ‰èƒ½å‡‘è¶³3å­—èŠ‚*/
+	/*æƒ…å†µ2: æœ€å4ä¸ªå­—ç¬¦æœ‰1ä¸ª'=',è¯´æ˜åŸå§‹æ•°æ®åœ¨æœ€åç¼º1å­—èŠ‚æ‰èƒ½å‡‘è¶³3å­—èŠ‚*/
+	/*æƒ…å†µ3: æœ€å4ä¸ªå­—ç¬¦ä¸­æ²¡æœ‰'=',è¯´æ˜åŸå§‹æ•°æ®é•¿åº¦æ˜¯3çš„å€æ•°*/
 	if (code[len - 2] < 64 && code[len - 1] < 64)
 	{
 		binLen = ((len * 6) / 8);
@@ -52,7 +52,7 @@ BYTE* Base64Helper::decode(BYTE* base64code, int len, int* outlen)
 		bin[binLen - 2] = block.b[1];
 		bin[binLen - 1] = block.b[0];
 	}
-	else if (code[len - 2] == 65 && code[len - 1] == 65) //¹ıÂË×îºóÁ½¸ö×Ö·ûÊÇ'=' 'ÆäËû'µÄÇé¿ö
+	else if (code[len - 2] == 65 && code[len - 1] == 65) //è¿‡æ»¤æœ€åä¸¤ä¸ªå­—ç¬¦æ˜¯'=' 'å…¶ä»–'çš„æƒ…å†µ
 	{
 		binLen = ((len * 6) / 8) - 2;
 		bin = new BYTE[binLen];
@@ -67,10 +67,10 @@ BYTE* Base64Helper::decode(BYTE* base64code, int len, int* outlen)
 		bin[binLen - 2] = block.b[2];
 		bin[binLen - 1] = block.b[1];
 	}
-	else return 0;			//ÆäËûÇé¿öÎª²»ºÏ·¨µÄbase64
+	else return 0;			//å…¶ä»–æƒ…å†µä¸ºä¸åˆæ³•çš„base64
 
 
-	/*¶Ô³ıÈ¥Ä©Î²µÄ4¸ö×Ö·ûµÄÆäËû×Ö·û½âÂë*/
+	/*å¯¹é™¤å»æœ«å°¾çš„4ä¸ªå­—ç¬¦çš„å…¶ä»–å­—ç¬¦è§£ç */
 	int off = 0;
 	for (int i = 0; i < len - 4; i += 4)
 	{
@@ -92,8 +92,8 @@ BYTE* Base64Helper::decode(BYTE* base64code, int len, int* outlen)
 
 BYTE* Base64Helper::encode(BYTE* binaryData, int len, int* outlen)
 {
-	int blockCnt = len / 3;						//base64 3¸öÔ­Ê¼Êı¾İÎªÒ»×é,¶ÔÓ¦4¸öbase64Âë
-	int remainder = len % 3;	//»¹Ê£¶àÉÙ×Ö½ÚÃ»ÓĞ±»±íÊ¾
+	int blockCnt = len / 3;						//base64 3ä¸ªåŸå§‹æ•°æ®ä¸ºä¸€ç»„,å¯¹åº”4ä¸ªbase64ç 
+	int remainder = len % 3;	//è¿˜å‰©å¤šå°‘å­—èŠ‚æ²¡æœ‰è¢«è¡¨ç¤º
 	if (remainder > 0) blockCnt++;
 
 	datablock* base64block = new datablock[blockCnt];
@@ -101,7 +101,7 @@ BYTE* Base64Helper::encode(BYTE* binaryData, int len, int* outlen)
 	datablock temp24bit;
 	DWORD mask[4];
 
-	mask[0] = 0x00'FC'00'00;			//ÑÚÂë
+	mask[0] = 0x00'FC'00'00;			//æ©ç 
 	mask[1] = 0x00'03'F0'00;
 	mask[2] = 0x00'00'0F'C0;
 	mask[3] = 0x00'00'00'3F;
@@ -110,14 +110,14 @@ BYTE* Base64Helper::encode(BYTE* binaryData, int len, int* outlen)
 	for (int i = 0; i < blockCnt - 1 ; i++)
 	{
 		base64block[i].dword = 0;
-		temp24bit.b[0] = binaryData[off + 2];		//´æÈëÒ»¸ödwordÖĞµÄµÍÎ»
+		temp24bit.b[0] = binaryData[off + 2];		//å­˜å…¥ä¸€ä¸ªdwordä¸­çš„ä½ä½
 		temp24bit.b[1] = binaryData[off + 1];
 		temp24bit.b[2] = binaryData[off];  
 
-		base64block[i].b[0] = (temp24bit.dword & mask[0]) >> 18;//¹ıÂË³ö19-24Î»
-		base64block[i].b[1] = (temp24bit.dword & mask[1]) >> 12;//¹ıÂË³ö13-18Î»
-		base64block[i].b[2] = (temp24bit.dword & mask[2]) >> 6; //¹ıÂË³ö7-12Î» 
-		base64block[i].b[3] = (temp24bit.dword & mask[3]);	  //¹ıÂË³öµÍ6Î»
+		base64block[i].b[0] = (temp24bit.dword & mask[0]) >> 18;//è¿‡æ»¤å‡º19-24ä½
+		base64block[i].b[1] = (temp24bit.dword & mask[1]) >> 12;//è¿‡æ»¤å‡º13-18ä½
+		base64block[i].b[2] = (temp24bit.dword & mask[2]) >> 6; //è¿‡æ»¤å‡º7-12ä½ 
+		base64block[i].b[3] = (temp24bit.dword & mask[3]);	  //è¿‡æ»¤å‡ºä½6ä½
 		off += 3;
 	}
 
@@ -125,33 +125,33 @@ BYTE* Base64Helper::encode(BYTE* binaryData, int len, int* outlen)
 	{
 	case 1:
 		base64block[blockCnt - 1].dword = 0;
-		temp24bit.b[1] = 0;						//ÅÅ³ıÇ°ÃæµÄ¸ÉÈÅ
-		temp24bit.b[2] = binaryData[off];		//´Ó¸ßÎ»´æÈëÒ»¸ödword
-		base64block[blockCnt - 1].b[0] = (temp24bit.dword & mask[0]) >> 18;//¹ıÂË³ö19-24Î»
-		base64block[blockCnt - 1].b[1] = (temp24bit.dword & mask[1]) >> 12;//¹ıÂË³ö13-18Î» 
-		base64block[blockCnt - 1].b[2] = 64;			//Ğ´ÈëÌØÊâ±ê¼Ç,´ıÒëÂëÊ±·­Òë³É'='
+		temp24bit.b[1] = 0;						//æ’é™¤å‰é¢çš„å¹²æ‰°
+		temp24bit.b[2] = binaryData[off];		//ä»é«˜ä½å­˜å…¥ä¸€ä¸ªdword
+		base64block[blockCnt - 1].b[0] = (temp24bit.dword & mask[0]) >> 18;//è¿‡æ»¤å‡º19-24ä½
+		base64block[blockCnt - 1].b[1] = (temp24bit.dword & mask[1]) >> 12;//è¿‡æ»¤å‡º13-18ä½ 
+		base64block[blockCnt - 1].b[2] = 64;			//å†™å…¥ç‰¹æ®Šæ ‡è®°,å¾…è¯‘ç æ—¶ç¿»è¯‘æˆ'='
 		base64block[blockCnt - 1].b[3] = 64;
 		break;
 	case 2:
 		base64block[blockCnt - 1].dword = 0;
-		temp24bit.b[0] = 0;							//ÅÅ³ıÇ°ÃæµÄ¸ÉÈÅ
+		temp24bit.b[0] = 0;							//æ’é™¤å‰é¢çš„å¹²æ‰°
 		temp24bit.b[1] = binaryData[off + 1];		
-		temp24bit.b[2] = binaryData[off];		//´Ó¸ßÎ»´æÈëÒ»¸ödword
-		base64block[blockCnt - 1].b[0] = (temp24bit.dword & mask[0]) >> 18;	//¹ıÂË³ö19-24Î»
-		base64block[blockCnt - 1].b[1] = (temp24bit.dword & mask[1]) >> 12;//¹ıÂË³ö13-18Î» 
-		base64block[blockCnt - 1].b[2] = (temp24bit.dword & mask[2]) >> 6;//¹ıÂË³ö7-12Î»	
-		base64block[blockCnt - 1].b[3] = 64;		//Ğ´ÈëÌØÊâ±ê¼Ç,´ıÒëÂëÊ±·­Òë³É'='
+		temp24bit.b[2] = binaryData[off];		//ä»é«˜ä½å­˜å…¥ä¸€ä¸ªdword
+		base64block[blockCnt - 1].b[0] = (temp24bit.dword & mask[0]) >> 18;	//è¿‡æ»¤å‡º19-24ä½
+		base64block[blockCnt - 1].b[1] = (temp24bit.dword & mask[1]) >> 12;//è¿‡æ»¤å‡º13-18ä½ 
+		base64block[blockCnt - 1].b[2] = (temp24bit.dword & mask[2]) >> 6;//è¿‡æ»¤å‡º7-12ä½	
+		base64block[blockCnt - 1].b[3] = 64;		//å†™å…¥ç‰¹æ®Šæ ‡è®°,å¾…è¯‘ç æ—¶ç¿»è¯‘æˆ'='
 		break;
 	case 0:
 		base64block[blockCnt - 1].dword = 0;
-		temp24bit.b[0] = binaryData[off + 2];		//´æÈëÒ»¸ödwordÖĞµÄµÍÎ»
+		temp24bit.b[0] = binaryData[off + 2];		//å­˜å…¥ä¸€ä¸ªdwordä¸­çš„ä½ä½
 		temp24bit.b[1] = binaryData[off + 1];
 		temp24bit.b[2] = binaryData[off];
 
-		base64block[blockCnt - 1].b[0] = (temp24bit.dword & mask[0]) >> 18;//¹ıÂË³ö19-24Î»
-		base64block[blockCnt - 1].b[1] = (temp24bit.dword & mask[1]) >> 12;//¹ıÂË³ö13-18Î»
-		base64block[blockCnt - 1].b[2] = (temp24bit.dword & mask[2]) >> 6; //¹ıÂË³ö7-12Î» 
-		base64block[blockCnt - 1].b[3] = (temp24bit.dword & mask[3]);	  //¹ıÂË³öµÍ6Î»
+		base64block[blockCnt - 1].b[0] = (temp24bit.dword & mask[0]) >> 18;//è¿‡æ»¤å‡º19-24ä½
+		base64block[blockCnt - 1].b[1] = (temp24bit.dword & mask[1]) >> 12;//è¿‡æ»¤å‡º13-18ä½
+		base64block[blockCnt - 1].b[2] = (temp24bit.dword & mask[2]) >> 6; //è¿‡æ»¤å‡º7-12ä½ 
+		base64block[blockCnt - 1].b[3] = (temp24bit.dword & mask[3]);	  //è¿‡æ»¤å‡ºä½6ä½
 		break;
 	}
 
