@@ -17,4 +17,4 @@ base64helper  -tobin [sourcefile] [outputfile]  将源文件解码成二进制�
 
 正确性个人测试暂未发现问题，可以自己下载使用下。
 
-written by kiminouso,Hohai University
+Completed on 2022/11/20 by kiminouso,Hohai University
