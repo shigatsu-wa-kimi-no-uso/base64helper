@@ -22,6 +22,7 @@ Base64Helper类用法
 或者直接包含内联函数版Base64Helper.h
 
 定义一个Base64Helper类的对象即可使用 
+
 成员函数用法:
 
 BYTE* decode(BYTE* base64code, int len, int* outlen)
@@ -29,17 +30,25 @@ BYTE* decode(BYTE* base64code, int len, int* outlen)
 其中 typedef unsigned char BYTE
 
 返回一个解码的unsigned char数组的首指针，解码失败返回NULL
+
 参数：
+
 BYTE* base64code [输入参数]含有base64字符的要解码的内容，可以包含换行符，不得包含任何非base64字符的其他字符
+
 int len [输入参数] 参数 base64code 的长度
+
 int* outlen [输出参数]输出返回值unsigned char数组的数组的大小
 
 BYTE* encode(BYTE* binaryData, int len, int* outlen)
 
 返回一个编码成base64的unsigned char数组的首指针，编码失败返回NULL
+
 参数：
+
 BYTE* binaryData [输入参数]要编码的数据
+
 int len [输入参数]参数 binaryData 的长度
+
 int* outlen [输出参数]输出返回值unsigned char数组的数组的大小
 
 
