@@ -13,6 +13,7 @@ char buf[BUFFER_SIZE];
 int main(int argc,char** argv)
 {
 	Base64Helper helper;
+	char r = '12';
 	const char* cmdhelp = "-help";
 	const char* cmdtobase64 = "-tobase64";
 	const char* cmdtobin = "-tobin";
@@ -33,7 +34,7 @@ int main(int argc,char** argv)
 	DWORD srcSize;
 	int outputlen;
 	BYTE* output;
-
+	
 	if (strcmp(argv[1], cmdtobase64) == 0)
 	{
 		fin = fopen(argv[2], "rb");
@@ -46,6 +47,7 @@ int main(int argc,char** argv)
 		srcSize = ftell(fin);
 		if (srcSize > BUFFER_SIZE)
 		{
+			fclose(fin);
 			fprintf(stderr, "Any source file should be under 1048576 bytes (1MB).\n");
 			return 1;
 		}
@@ -53,6 +55,7 @@ int main(int argc,char** argv)
 		if (1 != fread(buf, srcSize, 1, fin))
 		{
 			printf("read file failed.");
+			fclose(fin);
 			return 1;
 		}
 		printf("source file size:%d bytes\n", srcSize);
@@ -60,17 +63,21 @@ int main(int argc,char** argv)
 		if (output == NULL)
 		{
 			fprintf(stderr, "encode file failed.");
+			fclose(fin);
 			return 1;
 		}
 		fout = fopen(argv[3], "w");
 		if (fout == NULL)
 		{
 			fprintf(stderr, "write file failed.");
+			fclose(fin);
 			return 1;
 		}
 		if (1 != fwrite(output, outputlen, 1, fout))
 		{
 			fprintf(stderr, "write file failed.");
+			fclose(fin);
+			fclose(fout);
 			return 1;
 		}
 		printf("output size:%d bytes\n", outputlen);
@@ -88,12 +95,14 @@ int main(int argc,char** argv)
 		if (srcSize > BUFFER_SIZE)
 		{
 			fprintf(stderr, "Any source file should be under the maximum size 1048576 bytes (1MB).\n");
+			fclose(fin);
 			return 1;
 		}
 		fseek(fin, 0, SEEK_SET);
 		if (1 != fread(buf, srcSize, 1, fin))
 		{
 			printf("read file failed.");
+			fclose(fin);
 			return 1;
 		}
 		printf("source file size:%d bytes\n", srcSize);
@@ -101,20 +110,26 @@ int main(int argc,char** argv)
 		if (output == NULL)
 		{
 			fprintf(stderr, "decode file failed.");
+			fclose(fin);
 			return 1;
 		}
 		fout = fopen(argv[3], "wb");
 		if (fout == NULL)
 		{
 			fprintf(stderr, "write file failed.");
+			fclose(fin);
 			return 1;
 		}
 		if (1 != fwrite(output, outputlen, 1, fout))
 		{
 			fprintf(stderr, "write file failed.");
+			fclose(fin);
+			fclose(fout);
 			return 1;
 		}
 		printf("output size:%d bytes\n", outputlen);
+		fclose(fin);
+		fclose(fout);
 	}
 
 	return 0;
