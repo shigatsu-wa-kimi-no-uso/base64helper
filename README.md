@@ -37,7 +37,7 @@ BYTE* base64code [输入参数]含有base64字符的要解码的内容，可以�
 
 int len [输入参数] 参数 base64code 的长度
 
-int* outlen [输出参数]输出返回值unsigned char数组的数组的大小
+int* outlen [输出参数]传入一个int型变量的指针,用于输出返回值unsigned char数组的数组的大小
 
 BYTE* encode(BYTE* binaryData, int len, int* outlen)
 
@@ -49,7 +49,7 @@ BYTE* binaryData [输入参数]要编码的数据
 
 int len [输入参数]参数 binaryData 的长度
 
-int* outlen [输出参数]输出返回值unsigned char数组的数组的大小
+int* outlen [输出参数]传入一个int型变量的指针,用于输出返回值unsigned char数组的数组的大小
 
 
 Completed on 2022/11/20 by kiminouso,Hohai University
