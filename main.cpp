@@ -52,7 +52,7 @@ int main(int argc,char** argv)
 		fseek(fin, 0, SEEK_SET);
 		if (1 != fread(buf, srcSize, 1, fin))
 		{
-			fprintf(stderr, "read file failed.");
+			printf("read file failed.");
 			return 1;
 		}
 		printf("source file size:%d bytes\n", srcSize);
@@ -77,7 +77,7 @@ int main(int argc,char** argv)
 	}
 	else if (strcmp(argv[1], cmdtobin) == 0)
 	{
-		fin = fopen(argv[2], "r");
+		fin = fopen(argv[2], "rb");
 		if (fin == NULL)
 		{
 			fprintf(stderr, "open file failed.");
@@ -93,7 +93,7 @@ int main(int argc,char** argv)
 		fseek(fin, 0, SEEK_SET);
 		if (1 != fread(buf, srcSize, 1, fin))
 		{
-			fprintf(stderr, "read file failed.");
+			printf("read file failed.");
 			return 1;
 		}
 		printf("source file size:%d bytes\n", srcSize);
